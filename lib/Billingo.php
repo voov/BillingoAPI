@@ -1,4 +1,5 @@
 <?php
+namespace Billingo;
 /**
  Copyright (c) 2014, VOOV LLC.
  All rights reserved.
