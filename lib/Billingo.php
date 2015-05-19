@@ -19,11 +19,32 @@ class Billingo extends \R7\Client {
 		$response = $this->sendRequest("POST", $enc, "/invoices");
 		return json_decode($response);
 	}
+	
+	public function listInvoices() {
+		$query = array();
+		\R7\Signer::createSignedAttributeSet($query, PRIVATE_KEY);
+		$response = $this->sendRequest("GET", $query, "/invoices");
+		return json_decode($response);
+	}
+	
+	public function listInvoiceItems($invoiceId) {
+		$query = array();
+		\R7\Signer::createSignedAttributeSet($query, PRIVATE_KEY);
+		$response = $this->sendRequest("GET", $query, "/invoices/{$invoiceId}/items");
+		return json_decode($response);
+	}
 
 	public function getClients() {
 		$query = array();
 		\R7\Signer::createSignedAttributeSet($query, PRIVATE_KEY);
 		$response = $this->sendRequest("GET", $query, "/clients");
+		return json_decode($response);
+	}
+
+	public function getBankAccounts() {
+		$query = array();
+		\R7\Signer::createSignedAttributeSet($query, PRIVATE_KEY);
+		$response = $this->sendRequest("GET", $query, "/bank_accounts");
 		return json_decode($response);
 	}
 
