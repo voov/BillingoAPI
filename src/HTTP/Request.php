@@ -8,10 +8,14 @@
 namespace Billingo\API\Client\HTTP;
 
 
+use Billingo\API\Client\Container\Container;
 use GuzzleHttp\Client;
 
 class Request
 {
+	/**
+	 * @var Client
+	 */
 	private $client;
 
 	/**
@@ -19,10 +23,25 @@ class Request
 	 */
 	public function __construct()
 	{
-		$this->client = new Client([
-			'base_url' => ''
-								   ]);
+		$this->client = Container::client();
 	}
 
+	/**
+	 * Make a request to the Billingo API
+	 * @param $method
+	 * @param $uri
+	 * @param array $data
+	 */
+	private function request($method, $uri, $data=[])
+	{
+		try {
 
+			$config = Container::config();
+
+			//$this->client->request($method, )
+
+		} catch (\Exception $e) {
+
+		}
+	}
 }

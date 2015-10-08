@@ -8,6 +8,9 @@
 namespace Billingo\API;
 
 
+use Billingo\API\Client\Container\Container;
+use GuzzleHttp\Client;
+
 class Billingo
 {
 	/**
@@ -21,6 +24,14 @@ class Billingo
 	 */
 	public function __construct(array $opts = [])
 	{
-		$this->opts = $opts;
+		// Bind the config to the container
+		Container::bind('config', function() use ($opts) {
+			return $opts;
+		});
+
+		// Bind Guzzle
+		Container::bind('client', function() use ($opts) {
+			return new Client(['base_uri' => $opts['base_uri']]);
+		});
 	}
 }
