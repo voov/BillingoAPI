@@ -31,17 +31,63 @@ class Request
 	 * @param $method
 	 * @param $uri
 	 * @param array $data
+	 * @return mixed|\Psr\Http\Message\ResponseInterface
 	 */
 	private function request($method, $uri, $data=[])
 	{
 		try {
 
-			$config = Container::config();
-
-			//$this->client->request($method, )
+			return $this->client->request($method, $uri, $data);
 
 		} catch (\Exception $e) {
 
 		}
+
+		return null; //
+	}
+
+	/**
+	 * GET
+	 * @param $uri
+	 * @param array $data
+	 * @return mixed|\Psr\Http\Message\ResponseInterface
+	 */
+	public function get($uri, $data=[])
+	{
+		return $this->request('GET', $uri, $data);
+	}
+
+	/**
+	 * POST
+	 * @param $uri
+	 * @param array $data
+	 * @return mixed|\Psr\Http\Message\ResponseInterface
+	 */
+	public function post($uri, $data=[])
+	{
+		return $this->request('GET', $uri, $data);
+	}
+
+	/**
+	 * PUT
+	 * @param $uri
+	 * @param array $data
+	 * @return mixed|\Psr\Http\Message\ResponseInterface
+	 */
+	public function put($uri, $data = [])
+	{
+		return $this->request('GET', $uri, $data);
+	}
+
+
+	/**
+	 * DELETE
+	 * @param $uri
+	 * @param array $data
+	 * @return mixed|\Psr\Http\Message\ResponseInterface
+	 */
+	public function delete($uri, $data = [])
+	{
+		return $this->request('GET', $uri, $data);
 	}
 }
