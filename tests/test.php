@@ -5,10 +5,3 @@
  * Written by Daniel Fekete
  */
 
-namespace Billingo\API\Client\Resources;
-
-
-class Invoice extends Resource
-{
-
-}

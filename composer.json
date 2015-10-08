@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Billingo\\API\\Client": "src"
+      "Billingo\\API\\Client\\": "src"
     }
   }
 }
