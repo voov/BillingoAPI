@@ -16,6 +16,14 @@ interface ResourceInterface
 	 */
 	public function index();
 
+
+	/**
+	 * Read one resource
+	 * @param $id
+	 * @return mixed
+	 */
+	public function read($id);
+
 	/**
 	 * Create a new resource
 	 * @param $data
