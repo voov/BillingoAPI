@@ -5,7 +5,7 @@
  * Written by Daniel Fekete
  */
 
-namespace Billingo\API;
+namespace Billingo\API\Client;
 
 
 use Billingo\API\Client\Container\Container;
