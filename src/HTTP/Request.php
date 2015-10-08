@@ -9,6 +9,8 @@ namespace Billingo\API\Client\HTTP;
 
 
 use Billingo\API\Client\Container\Container;
+use Billingo\API\Client\Exceptions\JSONParseException;
+use Billingo\API\Client\Exceptions\RequestErrorException;
 use GuzzleHttp\Client;
 
 class Request
@@ -31,19 +33,19 @@ class Request
 	 * @param $method
 	 * @param $uri
 	 * @param array $data
-	 * @return mixed|\Psr\Http\Message\ResponseInterface
+	 * @return mixed|array
+	 * @throws JSONParseException
+	 * @throws RequestErrorException
 	 */
 	private function request($method, $uri, $data=[])
 	{
-		try {
+		$response = $this->client->request($method, $uri, $data);
+		$jsonData = json_decode($response->getBody(), true);
+		if($jsonData == null) throw new JSONParseException('Cannot decode: ' . $response->getBody());
+		if($response->getStatusCode() != 200 || $jsonData['success'] == 0)
+			throw new RequestErrorException('Error: ' . $jsonData['msg'], $response->getStatusCode());
 
-			return $this->client->request($method, $uri, $data);
-
-		} catch (\Exception $e) {
-
-		}
-
-		return null; //
+		return $jsonData;
 	}
 
 	/**

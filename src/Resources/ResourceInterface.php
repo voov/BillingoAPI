@@ -8,42 +8,40 @@
 namespace Billingo\API\Client\Resources;
 
 
+use Doctrine\Common\Collections\Collection;
+
 interface ResourceInterface
 {
 	/**
 	 * Return the list of resources
+	 * @return ResourceInterface[]|Collection
+	 */
+	public static function all();
+
+	/**
+	 * Fill the resource with attributes
+	 * @param array $attributes
 	 * @return mixed
 	 */
-	public function index();
-
+	public function fill($attributes = []);
 
 	/**
 	 * Read one resource
 	 * @param $id
-	 * @return mixed
+	 * @return ResourceInterface
 	 */
-	public function read($id);
+	public static function read($id);
 
 	/**
-	 * Create a new resource
-	 * @param $data
+	 * Save the resource
 	 * @return mixed
 	 */
-	public function create($data);
-
-	/**
-	 * Update resource
-	 * @param $id
-	 * @param $data
-	 * @return mixed
-	 */
-	public function update($id, $data);
+	public function save();
 
 	/**
 	 * Delete resource
-	 * @param $id
 	 * @return mixed
 	 */
-	public function delete($id);
+	public function delete();
 
 }

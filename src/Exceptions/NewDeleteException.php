@@ -5,10 +5,9 @@
  * Written by Daniel Fekete
  */
 
-namespace Billingo\API\Client\Resources;
+namespace Billingo\API\Client\Exceptions;
 
-
-class Invoice extends Resource
+class NewDeleteException extends \Exception
 {
 
 }
