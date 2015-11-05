@@ -7,7 +7,6 @@
 
 namespace Billingo\API\Client;
 
-
 use Billingo\API\Client\Container\Container;
 use Billingo\API\Client\HTTP\Request;
 use GuzzleHttp\Client;

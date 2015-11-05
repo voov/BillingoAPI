@@ -67,7 +67,7 @@ class Request
 	 */
 	public function post($uri, $data=[])
 	{
-		return $this->request('GET', $uri, $data);
+		return $this->request('POST', $uri, $data);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Request
 	 */
 	public function put($uri, $data = [])
 	{
-		return $this->request('GET', $uri, $data);
+		return $this->request('PUT', $uri, $data);
 	}
 
 
@@ -90,6 +90,6 @@ class Request
 	 */
 	public function delete($uri, $data = [])
 	{
-		return $this->request('GET', $uri, $data);
+		return $this->request('DELETE', $uri, $data);
 	}
 }

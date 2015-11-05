@@ -44,13 +44,6 @@ abstract class Resource implements ResourceInterface
 		$this->exists = $exists;
 	}
 
-	/**
-	 * Return the route with the resource ID appended
-	 * @return string
-	 */
-	protected static function getRouteWithId($id) {
-		return rtrim(static::$route, '/') . '/' . $id;
-	}
 
 	function __set($name, $value)
 	{
@@ -80,10 +73,10 @@ abstract class Resource implements ResourceInterface
 	{
 		if(!$this->exists) {
 			// save the resource as new
-			$this->request->post(static::$route, $this->attributes);
+			$this->request->post($this->route(), $this->attributes);
 		} else {
 			// update current resource
-			$this->request->put(static::getRouteWithId($this->id), $this->attributes);
+			$this->request->put($this->route($this->id), $this->attributes);
 		}
 	}
 
@@ -96,11 +89,13 @@ abstract class Resource implements ResourceInterface
 		$coll = new ArrayCollection();
 		/** @var Request $request */
 		$request = Container::request();
-		$response = $request->get(static::$route);
-		foreach ((array)$response['data'] as $item) {
-			$instance = new static($item, true);
-			$coll->add($instance);
-		}
+
+//		$response = $request->get($this->route());
+//
+//		foreach ((array)$response['data'] as $item) {
+//			$instance = new static($item, true);
+//			$coll->add($instance);
+//		}
 
 		return $coll;
 	}
@@ -125,7 +120,7 @@ abstract class Resource implements ResourceInterface
 	 */
 	public function delete()
 	{
-		if($this->exists && $this->id != null) $this->request->delete(static::getRouteWithId($this->id), ['id' => $this->id]);
+		if($this->exists && $this->id != null) $this->request->delete($this->route($this->id), ['id' => $this->id]);
 		else throw new NewDeleteException();
 	}
 
