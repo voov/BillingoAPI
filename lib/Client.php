@@ -37,14 +37,26 @@ class Client {
 		} else {
 			$url .= "?" . http_build_query($data);
 		}
-		
+
 		if($headers != null) $params["http"]["header"] = $headers;
+
 		$ctx = stream_context_create($params);
 		$fp = @fopen($url, "rb", false, $ctx);
-		if(!$fp) throw new \Exception("Problem with $url, $php_errormsg");
+
+		if(!$fp) {
+			$error = error_get_last();
+			throw new \Exception("Problem with $url, {$error['message']}");
+		}
+
 		$response = @stream_get_contents($fp);
-		if($response == FALSE) throw new \Exception("Problem reading data from $url, $php_errormsg");
+
+		if($response == FALSE) {
+			$error = error_get_last();
+			throw new \Exception("Problem reading data from $url, {$error['message']}");
+		}
+
 		fclose($fp);
+
 		return $response;
 	}
-} 
+}
