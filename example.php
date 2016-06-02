@@ -4,16 +4,16 @@
  * All rights reserved.
  * Written by Daniel Fekete
  */
-define("PRIVATE_KEY", "YOUR_PRIVATE_KEY");
-define("PUBLIC_KEY", "YOUR_PUBLIC_KEY");
+define("PRIVATE_KEY", "483c09c3d7e3299db447e3ec48be5a626197c58d590280c59cdd020282a4a957112bb3d9e6e928f75232caa0eae8a531745a0ef2643d4eff3e7b7cb4fa463bab");
+define("PUBLIC_KEY", "28729a55286ef14dc086224b8678261e");
 
-require_once "lib/Billingo.php";
-use Billingo\Billingo;
+require_once "lib/BillingoTest.php";
+use Billingo\BillingoTest;
 
 $product = array(
 	'clients_id' => null,
-	'fulfillment_date' => '2014-02-06',
-	'due_date' => '2014-02-14',
+	'fulfillment_date' => date('Y-m-d'),
+	'due_date' => (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P8D'))->format('Y-m-d'),
 	'is_draft' => 0,
 	'payment_method' => 1,
 	'comment' => 'N/A',
@@ -59,17 +59,20 @@ $product = array(
 		),
 );
 
-$b = new Billingo();
+$b = new BillingoTest();
 $newClient = $b->addClient(array(
 			  "name" => "Teszt " . rand(10, 99),
 			  "address_street" => "Valahol utca 300",
 			  "address_city" => "Sopron",
 			  "address_postcode" => "9400",
 			  "address_country" => "Magyarország",
-			  "email" => "teszt@teszt2000kft.hu",
+			  "email" => "xyz@voov.hu",
 			  "taxcode" => "12345678-2-00"
 		  ));
+var_dump($newClient);
+//var_dump($b->getClients());
 if($newClient->success == true) {
 	$product["clients_id"] = $newClient->clients_id;
 	$invoice = $b->addInvoice($product);
+    var_dump($invoice);
 }
