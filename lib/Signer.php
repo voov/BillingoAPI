@@ -13,7 +13,7 @@ namespace R7;
  */
 class Signer {
 	public static function createSignedAttributeSet(&$attributes, $privateKey) {
-		$attributes["ts"] = gmmktime() . "";
+		$attributes["ts"] = (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp() . "";
 		$attributes["public_key"] = PUBLIC_KEY;
 		$q = json_encode($attributes);
 		$attributes["signature"] = hash_hmac("sha256", $q, $privateKey);

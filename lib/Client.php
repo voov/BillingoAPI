@@ -12,11 +12,15 @@ namespace R7;
  * @package R7
  */
 class Client {
-	protected $url;
-	public function __construct($url) {
-		$this->url = $url;
+
+    protected $url;
+
+    public function __construct($url) {
+
+        $this->url = $url;
+
 	}
-	public function sendRequest($type, $data, $endpoint = "/", $headers = null) {
+	public function sendRequest($type, $data, $endpoint = "/", $headers = []) {
 
 		$params = array('http' => array(
 			'method' => $type,
@@ -25,20 +29,19 @@ class Client {
 		$url = $this->url . $endpoint;
 
 		if($type == "POST") {
-			if(is_string($data)) {
-				$params["http"]['header'] = "Content-type: text/plain;utf-8\r\n"
-				. "Content-Length: " . strlen($data) . "\r\n";
+            $headers[] = "Content-Length: " . strlen($data);
+            if(is_string($data)) {
+                $headers[] = 'Content-type: application/json;utf-8';
 				$params["http"]["content"] = $data;
 			} else {
-				$params["http"]['header'] = "Content-type: application/x-www-form-urlencoded;utf-8\r\n"
-					. "Content-Length: " . strlen($data) . "\r\n";
+				$headers[] = 'Content-type: application/x-www-form-urlencoded;utf-8';
 				$params["http"]["content"] = http_build_query($data);
 			}
 		} else {
 			$url .= "?" . http_build_query($data);
 		}
 
-		if($headers != null) $params["http"]["header"] = $headers;
+		if(!empty($headers)) $params["http"]["header"] = implode('\r\n', $headers) . '\r\n';
 
 		$ctx = stream_context_create($params);
 		$fp = @fopen($url, "rb", false, $ctx);
